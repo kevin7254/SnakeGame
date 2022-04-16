@@ -4,15 +4,9 @@
 package SnakeGame;
 
 import SnakeGame.gamelogic.Gameplay;
-import SnakeGame.gui.Window;
 
 public class App {
-    public void game() {
-        
-        new Gameplay();
-    }
-
     public static void main(String[] args) {
-        new App().game();
+        new Gameplay();
     }
 }

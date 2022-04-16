@@ -10,11 +10,11 @@ public class Snake {
     private String moving;
 
     public Snake() {
-        System.out.println("Snake created");
         this.body = new ArrayList<>();
 
         this.body.add(new Rectangle(100, 100, 20, 20));
         this.body.add(new Rectangle(80, 100, 20, 20));
+        this.body.add(new Rectangle(60, 100, 20, 20));
 
         moving = "STILL";
     }
@@ -25,6 +25,14 @@ public class Snake {
 
     public void setBody(List<Rectangle> body) {
         this.body = body;
+    }
+
+    public int getX() {
+        return this.body.get(0).x;
+    }
+
+    public int getY() {
+        return this.body.get(0).y;
     }
 
     public void up() {
@@ -41,6 +49,10 @@ public class Snake {
 
     public void right() {
         moving = "RIGHT";
+    }
+
+    public String getMovement() {
+        return moving;
     }
 
     public void grow() {

@@ -13,9 +13,6 @@ public class Gameplay implements KeyListener {
     private Window window;
     private Panel panel;
 
-    private int x = 0;
-    private int y = 0;
-
     public Gameplay() {
         snake = new Snake();
         apple = new Apple(snake);
@@ -26,47 +23,73 @@ public class Gameplay implements KeyListener {
         window.setVisible(true);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
+    public void start() {
+        panel.state = "RUNNING";
+    }
+
+    public void update() {
+        if (panel.state.equals("RUNNING")) {
+            if (foodColision()) {
+                snake.grow();
+                apple.generateLocation(snake);
+            } else if (wallColision() || snakeColision()) {
+                panel.state = "GAME_OVER";
+                System.out.println("GAME OVER");
+            } else {
+                snake.move();
+            }
+        }
+    }
+
+    private boolean foodColision() {
+        if (snake.getX() == apple.getX() && snake.getY() == apple.getY()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean wallColision() {
+        if (snake.getX() < 0 || snake.getX() > Window.WIDTH - 35 || snake.getY() < 0
+                || snake.getY() > Window.HEIGHT - 35) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean snakeColision() {
+        for (int i = 1; i < snake.getBody().size(); i++) {
+            if (snake.getBody().get(i).getX() == snake.getX() && snake.getBody().get(i).getY() == snake.getY()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_LEFT) {
-            snake.left();
-            snake.move();
+        if (panel.state.equals("RUNNING")) {
+            String movement = snake.getMovement();
+
+            if (key == KeyEvent.VK_LEFT && !movement.equals("RIGHT")) {
+                snake.left();
+            }
+
+            if (key == KeyEvent.VK_RIGHT && !movement.equals("LEFT")) {
+                snake.right();
+            }
+
+            if (key == KeyEvent.VK_UP && !movement.equals("DOWN")) {
+                snake.up();
+            }
+
+            if (key == KeyEvent.VK_DOWN && !movement.equals("UP")) {
+                snake.down();
+            }
+        } else {
+            start();
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
-            snake.right();
-            snake.move();
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            snake.up();
-            snake.move();
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            snake.down();
-            snake.move();
-        }
-
-        //enter key
-        if (key == KeyEvent.VK_ENTER) {
-            System.out.println("enter");
-            snake.grow();
-        }
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     public Snake getSnake() {
@@ -76,5 +99,12 @@ public class Gameplay implements KeyListener {
     public Apple getApple() {
         return apple;
     }
-    
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 }
