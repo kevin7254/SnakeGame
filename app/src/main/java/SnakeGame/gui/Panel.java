@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 
 import SnakeGame.gamelogic.Apple;
 import SnakeGame.gamelogic.Gameplay;
@@ -37,6 +38,7 @@ public class Panel extends JPanel implements ActionListener {
 
     @Override
     public void paintComponent(java.awt.Graphics graphics) {
+        Toolkit.getDefaultToolkit().sync();
         super.paintComponent(graphics);
 
         Graphics2D g = (Graphics2D) graphics;
