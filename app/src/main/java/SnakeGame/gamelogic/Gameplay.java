@@ -1,6 +1,7 @@
 package SnakeGame.gamelogic;
 
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import SnakeGame.gui.Panel;
 import SnakeGame.gui.Window;
@@ -49,8 +50,8 @@ public class Gameplay implements KeyListener {
     }
 
     private boolean wallColision() {
-        if (snake.getX() < 0 || snake.getX() > Window.WIDTH - 35 || snake.getY() < 0
-                || snake.getY() > Window.HEIGHT - 35) {
+        if (snake.getX() < 0 || snake.getX() > Window.WIDTH - 15 || snake.getY() < 0
+                || snake.getY() > Window.HEIGHT - 55) {
             return true;
         }
         return false;

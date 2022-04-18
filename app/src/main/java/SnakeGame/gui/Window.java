@@ -7,7 +7,7 @@ public class Window extends JFrame {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
 
-    public static final int GAME_SPEED = 100; // in ms
+    public static final int GAME_SPEED = 80; // in ms
 
     public Window() {
         setTitle("Snake");
