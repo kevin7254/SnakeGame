@@ -38,11 +38,10 @@ public class Panel extends JComponent implements Runnable {
         super.paintComponent(graphics);
 
         Graphics2D g = (Graphics2D) graphics;
-        
+
         // Draw the background
         g.setColor(java.awt.Color.BLACK);
         g.fill(new Rectangle(0, 0, Window.WIDTH, Window.HEIGHT));
-        
 
         if (state.equals("START")) {
             String s = "PRESS ANY KEY TO START";
@@ -62,11 +61,10 @@ public class Panel extends JComponent implements Runnable {
         }
         Toolkit.getDefaultToolkit().sync();
     }
-    
 
     @Override
     public void run() {
-        while(true) {
+        while (true) {
             g.update();
             repaint();
             try {
