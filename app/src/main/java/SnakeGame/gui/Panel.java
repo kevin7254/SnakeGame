@@ -1,23 +1,20 @@
 package SnakeGame.gui;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Toolkit;
+
+import javax.swing.JComponent;
 
 import SnakeGame.gamelogic.Apple;
 import SnakeGame.gamelogic.Gameplay;
 import SnakeGame.gamelogic.Snake;
 
-public class Panel extends JPanel implements ActionListener {
+public class Panel extends JComponent implements Runnable {
 
     private static final long serialVersionUID = 1L;
 
-    private final Timer timer = new Timer(Window.GAME_SPEED, this);
+    private Thread thread;
     public String state = "START";
 
     private Snake snake;
@@ -25,7 +22,7 @@ public class Panel extends JPanel implements ActionListener {
     private Gameplay g;
 
     public Panel(Gameplay g) {
-        timer.start(); // activates listeners every 100 ms
+        this.setDoubleBuffered(true);
         this.g = g;
 
         snake = g.getSnake();
@@ -38,7 +35,6 @@ public class Panel extends JPanel implements ActionListener {
 
     @Override
     public void paintComponent(java.awt.Graphics graphics) {
-        Toolkit.getDefaultToolkit().sync();
         super.paintComponent(graphics);
 
         Graphics2D g = (Graphics2D) graphics;
@@ -63,12 +59,27 @@ public class Panel extends JPanel implements ActionListener {
                 g.fill(r);
             }
         }
-
+        Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        repaint();
-        g.update();
+    public void run() {
+        while (true) {
+            g.update();
+            repaint();
+            try {
+                Thread.sleep(Window.GAME_SPEED);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        requestFocus();
+        thread = new Thread(this);
+        thread.start();
     }
 }

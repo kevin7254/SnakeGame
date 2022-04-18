@@ -1,8 +1,8 @@
 package SnakeGame.gamelogic;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Rectangle;
 
 public class Snake {
     private List<Rectangle> body;
@@ -115,5 +115,4 @@ public class Snake {
             head.x += 20;
         }
     }
-
 }
